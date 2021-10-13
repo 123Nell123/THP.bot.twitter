@@ -20,7 +20,7 @@ def login_twitter
   end
 
     # ligne qui permet de tweeter sur ton compte
-    #client.update('Mon premier tweet en Ruby !!!!')
+    client.update(' tweet en Ruby !!!!')
   return client
 end
 
@@ -112,16 +112,21 @@ end
 
 
 def my_streaming(tweet_recherche)
-  client = Twitter::Streaming::Client.new do |config|
+  client1 = Twitter::Streaming::Client.new do |config|
       config.consumer_key        = ENV["TWITTER_CONSUMER_KEY"]
       config.consumer_secret     = ENV["TWITTER_CONSUMER_SECRET"]
       config.access_token        = ENV["TWITTER_ACCESS_TOKEN"]
       config.access_token_secret = ENV["TWITTER_ACCESS_TOKEN_SECRET"]
   end
 
-  client.filter(track: tweet_recherche) do |object|
+  client1.filter(track: tweet_recherche) do |object|
    # puts object.text if object.is_a?(Twitter::Tweet)
+   client = login_twitter
+   client.favorite(object)
+   client.follow(object.user)
    puts object.text 
+
+
   end
 
 end
